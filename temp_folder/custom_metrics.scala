@@ -19,13 +19,12 @@ private[spark] class DemoMetricsPlugin extends SparkPlugin {
         val metricRegistry = myContext.metricRegistry
         //val sourceName = "DAGScheduler"
         // Gauge for testing
-        val conf = sc.getConf
-          var _statusStore: AppStatusStore = _
-          val store = status_store.createLiveStore(conf, AppStatusSource.createSource(conf))
-          val stageList: Array[Int] = store.stageList(Arrays.asList(StageStatus.ACTIVE)).map(_.stageId).toArray
-            metricRegistry.register(MetricRegistry.name("totalTasks"), new Gauge[Int] {
-            override def getValue: Int = stageList.numTasks.sum
-          })
+        // log.Error(sc.localProperties)
+        val store = sc.getLocalProperty("statusStore")
+        val stageList = store.stageList(Arrays.asList(StageStatus.ACTIVE)).map(_.stageId).toArray
+        metricRegistry.register(MetricRegistry.name("totalTasks"), new Gauge[Int] {
+          override def getValue: Int = stageList.numTasks.sum
+        })
         Map.empty[String, String].asJava
       }
     }
