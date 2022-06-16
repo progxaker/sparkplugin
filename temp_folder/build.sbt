@@ -1,5 +1,0 @@
-name := "custom_plugin"
-version := "1.0"
-scalaVersion := "2.12.15"
-libraryDependencies += "org.apache.spark" % "spark-core_2.12" % "3.2.0"
-libraryDependencies += "com.codahale.metrics" % "metrics-core" % "3.0.2"

@@ -1,4 +1,4 @@
-name := "custom_plugin"
+name := "stage_metrics"
 version := "1.0"
 scalaVersion := "2.12.15"
 libraryDependencies += "org.apache.spark" % "spark-core_2.12" % "3.2.0"
