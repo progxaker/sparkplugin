@@ -50,6 +50,7 @@ class StageMetrics extends DriverPlugin with Logging {
     return pluginContext.metricRegistry.getNames().contains(metricRegistryName)
   }
 
+  // TODO: can be many active stages
   def registerMetrics(): Int = {
     val metricNames: Seq[String] = Seq("numTasks", "numActiveTasks", "numCompleteTasks")
     val metricRegistry = pluginContext.metricRegistry
