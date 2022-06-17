@@ -17,39 +17,46 @@ class StageMetrics extends DriverPlugin with Logging {
 
   private val metricStagePrefix: String = "stage"
 
-  def get_numTasks(currentStage: StageData): Int = {
-    return currentStage.numTasks
+  def get_numTasks(metricStage: StageData): Int = {
+    val currentStage: StageData = sparkContext.statusStore.stageList(null).head
+    if(metricStage.stageId == currentStage.stageId) return 1
+    else return 0
   }
 
-  def get_numActiveTasks(currentStage: StageData): Int = {
-    return currentStage.numActiveTasks
+  def get_numTasks(metricStage: StageData): Int = {
+    return metricStage.numTasks
   }
 
-  def get_numCompleteTasks(currentStage: StageData): Int = {
-    return currentStage.numCompleteTasks
+  def get_numActiveTasks(metricStage: StageData): Int = {
+    return metricStage.numActiveTasks
+  }
+
+  def get_numCompleteTasks(metricStage: StageData): Int = {
+    return metricStage.numCompleteTasks
   }
 
   // numTasks, numActiveTasks, numCompleteTasks
-  def get_metric_value(metricName: String, currentStageId: Int): Int = {
-    val currentStage: StageData = sparkContext.statusStore.stageList(null).find(_.stageId == currentStageId).head
+  def get_metric_value(metricName: String, metricStageId: Int): Int = {
+    val metricStage: StageData = sparkContext.statusStore.stageList(null).find(_.stageId == metricStageId).head
     return metricName match {
-      case "numTasks" => get_numTasks(currentStage)
-      case "numActiveTasks" => get_numActiveTasks(currentStage)
-      case "numCompleteTasks" => get_numCompleteTasks(currentStage)
+      case "status" => get_stageStatus(metricStage)
+      case "numTasks" => get_numTasks(metricStage)
+      case "numActiveTasks" => get_numActiveTasks(metricStage)
+      case "numCompleteTasks" => get_numCompleteTasks(metricStage)
       case _ =>
-        logWarning(s"$metricName with id ${currentStageId.toString} is not found")
+        logWarning(s"$metricName with id ${metricStageId.toString} is not found")
         0
     }
   }
 
-  def is_metric_registred(currentStageId: Int, metricName: String): Boolean = {
-    val metricRegistryName: String = s"$metricStagePrefix.${currentStageId.toString}.$metricName"
+  def is_metric_registred(metricStageId: Int, metricName: String): Boolean = {
+    val metricRegistryName: String = s"$metricStagePrefix.${metricStageId.toString}.$metricName"
     return pluginContext.metricRegistry.getNames().contains(metricRegistryName)
   }
 
   // TODO: can be many active stages
   def registerMetrics(): Int = {
-    val metricNames: Seq[String] = Seq("numTasks", "numActiveTasks", "numCompleteTasks")
+    val metricNames: Seq[String] = Seq("status", "numTasks", "numActiveTasks", "numCompleteTasks")
     val metricRegistry = pluginContext.metricRegistry
     val currentStageId: Int = sparkContext.statusStore.stageList(null).head.stageId
 
