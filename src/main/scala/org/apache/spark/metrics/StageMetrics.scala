@@ -17,7 +17,7 @@ class StageMetrics extends DriverPlugin with Logging {
 
   private val metricStagePrefix: String = "stage"
 
-  def get_numTasks(metricStage: StageData): Int = {
+  def get_stageStatus(metricStage: StageData): Int = {
     val currentStage: StageData = sparkContext.statusStore.stageList(null).head
     if(metricStage.stageId == currentStage.stageId) return 1
     else return 0
