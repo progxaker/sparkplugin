@@ -38,6 +38,10 @@ metrics_<app-selector>_driver_plugin_org_apache_spark_metrics_stagemetricsplugin
 
 ![Web UI](img/web_ui.png "Web UI")
 
+## Special thanks
+
+Thanks [CERN Database Group](https://github.com/cerndb) for the "[SparkPlugins](https://github.com/cerndb/SparkPlugins)" repository which served as a starting point for my plugin.
+
 ## Warning
 
 **Not product-ready**  
