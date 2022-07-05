@@ -1,6 +1,6 @@
 package org.apache.spark.metrics
 
-import org.apache.spark.api.plugin.{DriverPlugin, ExecutorPlugin, PluginContext, SparkPlugin}
+import org.apache.spark.api.plugin.{DriverPlugin, ExecutorPlugin, SparkPlugin}
 
 class StageMetricsPlugin extends SparkPlugin {
 

@@ -3,7 +3,7 @@ package org.apache.spark.metrics
 import java.util.{Map => JMap}
 import scala.collection.JavaConverters._
 
-import org.apache.spark.api.plugin.{DriverPlugin, ExecutorPlugin, PluginContext, SparkPlugin}
+import org.apache.spark.api.plugin.{DriverPlugin, PluginContext, SparkPlugin}
 import org.apache.spark.SparkContext
 import org.apache.spark.status.api.v1.{StageData, StageStatus}
 import org.apache.spark.status.AppStatusStore
